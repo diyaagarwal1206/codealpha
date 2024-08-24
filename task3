@@ -1,0 +1,62 @@
+import nltk
+from nltk.chat.util import Chat, reflections
+import datetime
+import pyjokes
+
+#Pairs of conversations
+pairs = [
+    [
+        r"my name is (.*)",
+        ["Hello %1, how can I help you today?", "Nice to meet you %1! How can I assist you?"]
+    ],
+    [
+        r"(hi|hello|hey|good morning|good evening)",
+        ["Hello! How are you today?", "Hi there! What can I do for you?"]
+    ],
+    [
+        r"(how are you|how's it going)",
+        ["I'm just a bunch of code, but I'm here to help! How can I assist you?",]
+    ],
+    [
+        r"(good|well|fine|okay|alright)",
+        ["That's great to hear! How can I assist you further?", "Glad to know you're feeling %2! How may I help?"]
+    ],
+    [
+        r"what is your name(.*)",
+        ["I'm just a humble chatbot with no name. How can I assist you?", "I don't have a name, but I'm here to help you."]
+    ],
+    [
+        r"(.) help (.)",
+        ["I'm here to help! What do you need assistance with?", "Sure, I'm here to help you with whatever you need."]
+    ],
+    [
+        r"can you tell me a joke",
+        [pyjokes.get_joke()]
+    ],
+    [
+        r"quit",
+        ["Thank you for chatting with me. Have a great day!", "Goodbye! It was nice talking to you."]
+    ],
+    [
+        r"(.*)",
+        ["I'm not sure I understand that. Could you please clarify?", "Can you please rephrase that?"]
+    ],
+]
+
+# Greeting
+def time_based_greeting():
+    current_hour = datetime.datetime.now().hour
+    if current_hour < 12:
+        return "Good morning! How can I assist you today?"
+    elif current_hour < 18:
+        return "Good afternoon! How can I help you today?"
+    else:
+        return "Good evening! What can I do for you?"
+
+def chatbot():
+    print(time_based_greeting())
+    chat = Chat(pairs, reflections)
+    chat.converse()
+
+if _name_ == "_main_":
+    chatbot()
